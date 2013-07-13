@@ -17,10 +17,6 @@
 [submodule "bundle/surround"]
 	path = bundle/surround
 	url = http://github.com/tpope/vim-surround.git
-[submodule "bundle/jshint"]
-	path = bundle/jshint
-	url = http://github.com/walm/jshint.vim.git
-        ignore = untracked
 [submodule "bundle/supertab"]
 	path = bundle/supertab
 	url = https://github.com/ervandew/supertab.git
