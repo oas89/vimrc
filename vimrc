@@ -1,126 +1,300 @@
-" Activate auto filetype detection
-syntax on
-filetype plugin indent on
-filetype on
-filetype plugin on
-syntax enable
-
-
-" eclipse elim settings
+" Use Vim settings, rather then Vi settings (much better!).
+" This must be first, because it changes other options as a side effect.
 set nocompatible
 
-" http://stackoverflow.com/questions/58774/how-do-you-paste-multiple-tabbed-lines-into-vi
-set pastetoggle=<F6>    " F6 toggles paste mode
-set ignorecase          " Don't care about case...
-set smartcase		" ... unless the query contains upper case characters
-set autoindent		" Enable automatic indenting for files with ft set
-set nowrap		" No fake carriage returns
-set showcmd		" Show command in statusline as it's being typed
-set showmatch		" Jump to matching bracket
-set ruler		" Show row,col %progress through file
-set laststatus=2	" Always show filename (2 is always)
-set hidden	    	" Let us move between buffers without writing them.  Don't :q! or :qa! frivolously!
-set softtabstop=4	" Vim sees 4 spaces as a tab
-set shiftwidth=4	" < and > uses spaces
-set expandtab		" Tabs mutate into spaces
-set foldmethod=indent	" Default folding
-set backspace=indent,eol,start  " Make backspace work like other editors.
-" set tabstop=4		" 4-space indents
-" set smarttab		" <TAB> width determined by shiftwidth instead of tabstop.  
-set fileencoding=utf8
-set fileencodings=utf8,cp1251
-set hlsearch            " highlight search terms
-set incsearch           " show search matches as you type
+language messages en_US.UTF-8
+let vimfiles_dir=expand("$HOME/.vim/")
 
-" http://nvie.com/posts/how-i-boosted-my-vim/
-set nobackup            " do not write backup and swap files
-set noswapfile
+filetype on
+if filereadable(vimfiles_dir."autoload/pathogen.vim")
+	"call pathogen#helptags()
+	call pathogen#runtime_append_all_bundles()
+	call pathogen#infect()
+endif
+filetype plugin indent on
+filetype plugin on
+
+set modeline
+set modelines=3
+
+set ttyfast
+set gdefault
+
+au BufRead,BufNewFile *.rs    set filetype=rust
+
+if version >= 703
+	set undofile
+endif
+set undodir=$HOME/.vimbackup
+set formatoptions=croql
+set cinoptions=l1,g0,p0,t0,c0,(s,U1,m1
+
+" save all at focus lost
+au FocusLost * :wa
+
+set backup      " keep a backup file
+set backupdir=$HOME/.vimbackup
+set history=250     " keep 250 lines of command line history
+set ruler           " show the cursor position all the time
+
+" Don't use Ex mode, use Q for formatting
+map Q gq
+
+set number
+"set relativenumber
+
+let g:solarized_termcolors=16
+let g:solarized_termtrans=0
+let g:solarized_degrade=0
+syntax enable
+set hlsearch
+set background=dark
+colorscheme solarized
+
+
+nmap <Left> <<
+nmap <Right> >>
+vmap <Left> <gv
+vmap <Right> >gv
+
+nmap <Up> <Nop>
+nmap <Down> <Nop>
+vmap <Up> <Nop>
+vmap <Down> <Nop>
+
+
+set listchars=tab:»\ ,trail:·,eol:¶
+set list
+
+" по умолчанию поиск латиницей
+set imsearch=0
+set tabstop=3
+set shiftwidth=3
+set autoindent smartindent
+"set smarttab
+"set expandtab
+" allow backspacing over everything in insert mode
+set backspace=indent,eol,start
+
+" граница переноса
+set wrapmargin=5
+" подсветим 85ю колонку
+if version >= 703
+	set colorcolumn=85
+endif
+" автоматический перенос после 128 колонки
+set textwidth=128
+" сколько строк повторять при скроллинге
+set scrolloff=4
+" подсветка строки и колонки курсора
+if version >= 700
+	set cursorline
+endif
+"set cursorcolumn
+"set visualbell
+" миннимальная высота окна
+"set winminheight=4
+" делать активное окон максимального размера
+"set noequalalways
+"set winheight=999
+
+set incsearch        " do incremental searching
+set ignorecase
+set smartcase
+
+
+set hidden          " не выгружать буфер когда переключаешься на другой
+if has("mouse")
+	set mouse=a         " включает поддержку мыши при работе в терминале (без GUI)
+	set mousehide       " скрывать мышь в режиме ввода текста
+endif
+set showcmd         " показывать незавершенные команды в статусбаре (автодополнение ввода)
+set matchpairs+=<:> " показывать совпадающие скобки для HTML-тегов
+set showmatch       " показывать первую парную скобку после ввода второй
+set autoread        " перечитывать изменённые файлы автоматически
+set confirm         " использовать диалоги вместо сообщений об ошибках
+
+" Автоматически перечитывать конфигурацию VIM после сохранения
+autocmd! BufWritePost $MYVIMRC source $MYVIMRC
+
+" Прыгать на последнюю позицию при открытии буфера
+autocmd! BufReadPost * call LastPosition()
+"
+function! LastPosition()
+	" не меняем позицию при коммите 
+	if expand("<afile>:s? \d+??") != '.git\COMMIT_EDITMSG'
+		if expand("<afile>:t") != ".git" && line("'\"")<=line('$')
+			normal! `"
+		endif
+	endif
+endfunction
+if version >= 700
+	" опции сессий - перейти в текущию директорию, использовать буферы и табы
+	set sessionoptions=curdir,buffers,help,options,resize,slash,tabpages,winpos,winsize 
+else
+	set sessionoptions=curdir,buffers,help,options,resize,slash,winpos,winsize
+endif
+
+
+" Для указанных типов файлов отключает замену табов пробелами и меняет ширину отступа
+au FileType crontab,fstab,make set noexpandtab tabstop=8 shiftwidth=8
+
+"" Применять типы файлов
+filetype on
+filetype plugin on
+filetype indent on
+" Если сохраняемый файл является файлом скрипта - сделать его исполняемым
+au BufWritePost * if getline(1) =~ "^#!.*/bin/.*sh"|silent !chmod a+x %|endif
+
+"" Переключение кодировок файла
+set wildmenu
+set wcm=<Tab>
+menu Encoding.CP1251   :e ++enc=cp1251<CR>
+menu Encoding.CP866    :e ++enc=cp866<CR>
+menu Encoding.KOI8-U   :e ++enc=koi8-u<CR>
+menu Encoding.UTF-8    :e ++enc=utf-8<CR>
+map <F8> :emenu Encoding.<TAB>
+
+set lazyredraw
+
+"set encoding=cp1251
+"set termencoding=utf-8
+set fileencodings=utf-8,cp1251,koi8-r,cp866
+set fileformats=unix,dos,mac " формат файла по умолчанию (влияет на окончания строк) - будет перебираться в указанном порядке
+
+" Ловля имени редактируемого файла из vim'а. (^[ вводится как Ctrl+V Esc)
+set title
+"set titlestring=%t-dsd
+"set titleold=&titlestring
+" screen:
+"set titlestring=%t
+"set titleold=bash
+let &titlestring = "vim (" . expand("%:t") . ")"
+if &term == "screen"
+	set t_ts=k
+	set t_fs=\
+endif
+if &term == "screen" || &term == "xterm"
+	set title
+endif
+
+autocmd! BufEnter * call NextTabOpened()
+"
+function! NextTabOpened()
+	let &titlestring = "vim (" . expand("%:t") . ")"
+endfunction
+
+" сохраняемся по F2
+nmap <F2> <ESC>:w<CR>
+imap <F2> <ESC>:w<CR>i<Right>
+nmap <F3> <ESC>:nohlsearch<CR>
+imap <F3> <ESC>:nohlsearch<CR>
+" F6/F7 - предыдущая/следующая ошибка
+nmap <F6> <ESC>:cp<CR>
+imap <F6> <ESC>:cp<CR>
+nmap <F7> <ESC>:cn<CR>
+imap <F7> <ESC>:cn<CR>
+
+nmap <F10> <ESC>:w !sudo tee %<CR>
+
+" ?
+"inoremap <silent> <C-u> <ESC>u:set paste<CR>.:set nopaste<CR>gi
+
+set statusline=%f\ %L%y%r\ [%{&ff}][%{&fenc}]\ %=%m\ %-15(0x%02B\ (%b)%)%-15(%l,%c%V%)%P
+" %{GitBranch()}\ 
+set laststatus=2
+
+" tab navigation like firefox
+if version >= 700
+	nmap Z :tabprev<cr>
+	nmap X :tabnext<cr>
+endif
+
+" хранить swap-файлы будем в одном месте, чтобы не мешались
+let swap_dir='/home/nekolyanich/.swapfiles'
+
+if !isdirectory(swap_dir) && exists('*mkdir')
+	call mkdir(swap_dir)
+endif
+
+if isdirectory(swap_dir)
+	let &directory=swap_dir.'/'
+endif
+
+"highlight SpellBad  ctermbg=blue
+
+"GIT GREP
+func! GitGrep(...)
+	let save = &grepprg
+	set grepprg=git\ grep\ -n\ $*
+	let s = 'grep'
+	for i in a:000
+		let s = s . ' ' . i
+	endfor
+	exe s
+	let &grepprg = save
+endfun
+command! -nargs=? G call GitGrep(<f-args>)
+
+func! GitGrepWord()
+	normal! "zyiw
+	call GitGrep('-w -e ', getreg('z'))
+endf
+nmap <C-x>G :call GitGrepWord()<CR>
+"let g:khuno_ignore="W191,E501,E303,E123,E241,E121,E122,E221,E242,E128,E225"
+
+
+
+
+
+
+
+" Return indent (all whitespace at start of a line), converted from
+" tabs to spaces if what = 1, or from spaces to tabs otherwise.
+" When converting to tabs, result has no redundant spaces.
+function! Indenting(indent, what, cols)
+  let spccol = repeat(' ', a:cols)
+  let result = substitute(a:indent, spccol, '\t', 'g')
+  let result = substitute(result, ' \+\ze\t', '', 'g')
+  if a:what == 1
+    let result = substitute(result, '\t', spccol, 'g')
+  endif
+  return result
+endfunction
+
+" Convert whitespace used for indenting (before first non-whitespace).
+" what = 0 (convert spaces to tabs), or 1 (convert tabs to spaces).
+" cols = string with number of columns per tab, or empty to use 'tabstop'.
+" The cursor position is restored, but the cursor will be in a different
+" column when the number of characters in the indent of the line is changed.
+function! IndentConvert(line1, line2, what, cols)
+  let savepos = getpos('.')
+  let cols = empty(a:cols) ? &tabstop : a:cols
+  execute a:line1 . ',' . a:line2 . 's/^\s\+/\=Indenting(submatch(0), a:what, cols)/e'
+  call histdel('search', -1)
+  call setpos('.', savepos)
+endfunction
+command! -nargs=? -range=% Space2Tab call IndentConvert(<line1>,<line2>,0,4)
+command! -nargs=? -range=% Tab2Space call IndentConvert(<line1>,<line2>,1,4)
+command! -nargs=? -range=% RetabIndent call IndentConvert(<line1>,<line2>,&et,<q-args>)
+
+function! ToggleIndent()
+	if !search('^\t', 'nw')
+		Space2Tab
+		au BufWritePre,FileWritePre,FileAppendPre,FilterWritePre  * :Tab2Space
+		au BufWritePost,FileWritePost,FileAppendPost,FilterWritePost * :Space2Tab
+	endif
+endf
+
+au FileType python call ToggleIndent()
+" Activate auto filetype detection
+set pastetoggle=<F6>    " F6 toggles paste mode
 
 
 au BufNewFile,BufRead *.txt setf text
 au FileType text set wrap 
 
-
-" abbreviate seting rus for keyboard
-abb rru set keymap=rus
-abb uuk set keymap=ukr
-
-
-" http://stackoverflow.com/questions/563616/vim-and-ctags-tips-and-tricks
-" C-\ - Open the definition in a new tab
-" A-] - Open the definition in a vertical split
-map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
-map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
-
-
-" Evoke a web browser
-function! Browser ()
-  let line0 = getline (".")
-  let line = matchstr (line0, "http[^ >]*")
-  :if line==""
-  let line = matchstr (line0, "ftp[^ >]*")
-  :endif
-  :if line==""
-  let line = matchstr (line0, "file[^ >]*")
-  :endif
-  let line = escape (line, "#?&;|%")
-  " echo line
-  exec ":silent !google-chrome ".line
-endfunction
-
-
-" Evoke evince (pdf viewer)
-function! Evince()
-  let line = getline (".")
-  echo line
-  exec ':silent !evince ' . "\"" . line . "\""
-endfunction
-
-
-" F-keys mappings
-
-" insert current date and time
-nnoremap <F2> "=strftime("%c")<CR>P
-inoremap <F2> <C-R>=strftime("%c")<CR>
-nnoremap <F3> :call Browser ()<CR>
-nnoremap <F4> :call Evince()<CR>
-nnoremap <F5> :GundoToggle<CR>
-nmap <F8> :TagbarToggle<CR>
-nnoremap <F12> :set go-=m go-=T go-=l go-=L go-=r go-=R go-=b go-=F<CR> :set lines=999 columns=999 <CR>
-
-
-" change local directory to file directory
-abb flcd lcd %:p:h
-
-let g:SaveUndoLevels = &undolevels
-let g:BufSizeThreshold = 1000000
-if has("autocmd")
-  " Store preferred undo levels
-  au VimEnter * let g:SaveUndoLevels = &undolevels
-  " Don't use a swap file for big files
-  au BufReadPre * if getfsize(expand("<afile>")) >= g:BufSizeThreshold | setlocal noswapfile | endif
-  " Upon entering a buffer, set or restore the number of undo levels
-  au BufEnter * if getfsize(expand("<afile>")) < g:BufSizeThreshold | let &undolevels=g:SaveUndoLevels | hi Cursor term=reverse ctermbg=black guibg=black | else | set undolevels=-1 | hi Cursor term=underline ctermbg=red guibg=red | endif
-endif
-
-set vb t_vb=
-
-set foldignore=''
-
-" Quickly edit/reload the vimrc file
-" http://nvie.com/posts/how-i-boosted-my-vim/
-nmap <silent> <leader>ev :e $MYVIMRC<CR>
-nmap <silent> <leader>sv :so $MYVIMRC<CR>
-
-" clear search highlighting with <leader>/
-nmap <silent> <leader>/ :nohlsearch<CR>
-
-
 " plugin settings
-
-" ctrlp
-
-let g:ctrlp_custom_ignore = {'file': '\v(\.pyc|\.swp)$'}
 
 " pyflakes
 
@@ -135,12 +309,6 @@ let g:flake8_max_line_length=99
 " autorun flake8 on save
 autocmd BufWritePost *.py call Flake8()
 
-" supertab
-
-au FileType python set omnifunc=pythoncomplete#Complete
-let g:SuperTabDefaultCompletionType = "context"
-set completeopt=menuone,longest,preview
-
 " pathogen
 
 call pathogen#infect()
@@ -151,16 +319,6 @@ call pathogen#helptags()
 " ignore in NERDTree files that end with pyc and ~
 let NERDTreeIgnore=['\.pyc$', '\~$']
 
-" solarized (it should be at the end)
-
-if has('gui_running')
-    colorscheme solarized
-    set background=light
-else
-    set background=dark
-endif
-
-se guioptions=agim
 
 " flavored-markdown
 " https://github.com/jtratner/vim-flavored-markdown
@@ -168,33 +326,6 @@ augroup markdown
     au!
     au BufNewFile,BufRead *.md,*.markdown,*.md.in setlocal filetype=ghmarkdown
 augroup END
-
-
-" Link to Spotify
-nnoremap <Leader>al :call AddLink()<CR>
-function! AddLink()
-  let url = getline (".")
-  let url = matchstr (url, "http[^ >]*")
-  if empty(url)
-    return
-  endif
-  let html = system('wget -q -O - ' . shellescape(url))
-  let regex = '\c.*head.*<title[^>]*>\_s*\zs.\{-}\ze\_s*<\/title>'
-  let regex_artist = '\cby \zs.\{-}\ze on Spotify'
-  let regex_title = '\c\zs.\{-}\ze by '
-  let url_title = substitute(matchstr(html, regex), "\n", ' ', 'g')
-  let url_title = substitute(matchstr(html, regex), "\n", ' ', 'g')
-  let title = matchstr(url_title, regex_title)
-  let artist = matchstr(url_title, regex_artist)
-  if empty(title)
-    let title = 'Unknown'
-  endif
-  exe "normal 0c$".title 
-  put = artist 
-  put = url
-  put = ''
-  exe "normal kkk"
-endfunction
 
 
 " abbreviate for Python pdb
