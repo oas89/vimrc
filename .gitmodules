@@ -52,3 +52,6 @@
 [submodule "bundle/vim-postgres"]
 	path = bundle/vim-postgres
 	url = https://github.com/ivalkeen/vim-postgres
+[submodule "bundle/vim-json"]
+	path = bundle/vim-json
+	url = git://github.com/elzr/vim-json.git
