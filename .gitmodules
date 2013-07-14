@@ -49,3 +49,6 @@
 [submodule "bundle/vim-protobuf"]
 	path = bundle/vim-protobuf
 	url = git://github.com/uarun/vim-protobuf.git
+[submodule "bundle/vim-postgres"]
+	path = bundle/vim-postgres
+	url = https://github.com/ivalkeen/vim-postgres
