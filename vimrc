@@ -7,9 +7,9 @@ let vimfiles_dir=expand("$HOME/.vim/")
 
 filetype on
 if filereadable(vimfiles_dir."autoload/pathogen.vim")
-	"call pathogen#helptags()
-	call pathogen#runtime_append_all_bundles()
-	call pathogen#infect()
+    "call pathogen#helptags()
+    call pathogen#runtime_append_all_bundles()
+    call pathogen#infect()
 endif
 filetype plugin indent on
 filetype plugin on
@@ -23,7 +23,7 @@ set gdefault
 au BufRead,BufNewFile *.rs    set filetype=rust
 
 if version >= 703
-	set undofile
+    set undofile
 endif
 set undodir=$HOME/.vimbackup
 set formatoptions=croql
@@ -80,7 +80,7 @@ set backspace=indent,eol,start
 set wrapmargin=5
 " подсветим 85ю колонку
 if version >= 703
-	set colorcolumn=85
+    set colorcolumn=85
 endif
 " автоматический перенос после 128 колонки
 set textwidth=128
@@ -88,7 +88,7 @@ set textwidth=128
 set scrolloff=4
 " подсветка строки и колонки курсора
 if version >= 700
-	set cursorline
+    set cursorline
 endif
 "set cursorcolumn
 "set visualbell
@@ -105,8 +105,8 @@ set smartcase
 
 set hidden          " не выгружать буфер когда переключаешься на другой
 if has("mouse")
-	set mouse=a         " включает поддержку мыши при работе в терминале (без GUI)
-	set mousehide       " скрывать мышь в режиме ввода текста
+    set mouse=a         " включает поддержку мыши при работе в терминале (без GUI)
+    set mousehide       " скрывать мышь в режиме ввода текста
 endif
 set showcmd         " показывать незавершенные команды в статусбаре (автодополнение ввода)
 set matchpairs+=<:> " показывать совпадающие скобки для HTML-тегов
@@ -121,18 +121,18 @@ autocmd! BufWritePost $MYVIMRC source $MYVIMRC
 autocmd! BufReadPost * call LastPosition()
 "
 function! LastPosition()
-	" не меняем позицию при коммите 
-	if expand("<afile>:s? \d+??") != '.git\COMMIT_EDITMSG'
-		if expand("<afile>:t") != ".git" && line("'\"")<=line('$')
-			normal! `"
-		endif
-	endif
+    " не меняем позицию при коммите 
+    if expand("<afile>:s? \d+??") != '.git\COMMIT_EDITMSG'
+        if expand("<afile>:t") != ".git" && line("'\"")<=line('$')
+            normal! `"
+        endif
+    endif
 endfunction
 if version >= 700
-	" опции сессий - перейти в текущию директорию, использовать буферы и табы
-	set sessionoptions=curdir,buffers,help,options,resize,slash,tabpages,winpos,winsize 
+    " опции сессий - перейти в текущию директорию, использовать буферы и табы
+    set sessionoptions=curdir,buffers,help,options,resize,slash,tabpages,winpos,winsize 
 else
-	set sessionoptions=curdir,buffers,help,options,resize,slash,winpos,winsize
+    set sessionoptions=curdir,buffers,help,options,resize,slash,winpos,winsize
 endif
 
 
@@ -171,17 +171,17 @@ set title
 "set titleold=bash
 let &titlestring = "vim (" . expand("%:t") . ")"
 if &term == "screen"
-	set t_ts=k
-	set t_fs=\
+    set t_ts=k
+    set t_fs=\
 endif
 if &term == "screen" || &term == "xterm"
-	set title
+    set title
 endif
 
 autocmd! BufEnter * call NextTabOpened()
 "
 function! NextTabOpened()
-	let &titlestring = "vim (" . expand("%:t") . ")"
+    let &titlestring = "vim (" . expand("%:t") . ")"
 endfunction
 
 " сохраняемся по F2
@@ -206,39 +206,39 @@ set laststatus=2
 
 " tab navigation like firefox
 if version >= 700
-	nmap Z :tabprev<cr>
-	nmap X :tabnext<cr>
+    nmap Z :tabprev<cr>
+    nmap X :tabnext<cr>
 endif
 
 " хранить swap-файлы будем в одном месте, чтобы не мешались
 let swap_dir='/home/nekolyanich/.swapfiles'
 
 if !isdirectory(swap_dir) && exists('*mkdir')
-	call mkdir(swap_dir)
+    call mkdir(swap_dir)
 endif
 
 if isdirectory(swap_dir)
-	let &directory=swap_dir.'/'
+    let &directory=swap_dir.'/'
 endif
 
 "highlight SpellBad  ctermbg=blue
 
 "GIT GREP
 func! GitGrep(...)
-	let save = &grepprg
-	set grepprg=git\ grep\ -n\ $*
-	let s = 'grep'
-	for i in a:000
-		let s = s . ' ' . i
-	endfor
-	exe s
-	let &grepprg = save
+    let save = &grepprg
+    set grepprg=git\ grep\ -n\ $*
+    let s = 'grep'
+    for i in a:000
+        let s = s . ' ' . i
+    endfor
+    exe s
+    let &grepprg = save
 endfun
 command! -nargs=? G call GitGrep(<f-args>)
 
 func! GitGrepWord()
-	normal! "zyiw
-	call GitGrep('-w -e ', getreg('z'))
+    normal! "zyiw
+    call GitGrep('-w -e ', getreg('z'))
 endf
 nmap <C-x>G :call GitGrepWord()<CR>
 "let g:khuno_ignore="W191,E501,E303,E123,E241,E121,E122,E221,E242,E128,E225"
@@ -279,11 +279,11 @@ command! -nargs=? -range=% Tab2Space call IndentConvert(<line1>,<line2>,1,4)
 command! -nargs=? -range=% RetabIndent call IndentConvert(<line1>,<line2>,&et,<q-args>)
 
 function! ToggleIndent()
-	if !search('^\t', 'nw')
-		Space2Tab
-		au BufWritePre,FileWritePre,FileAppendPre,FilterWritePre  * :Tab2Space
-		au BufWritePost,FileWritePost,FileAppendPost,FilterWritePost * :Space2Tab
-	endif
+    if !search('^\t', 'nw')
+        Space2Tab
+        au BufWritePre,FileWritePre,FileAppendPre,FilterWritePre  * :Tab2Space
+        au BufWritePost,FileWritePost,FileAppendPost,FilterWritePost * :Space2Tab
+    endif
 endf
 
 au FileType python call ToggleIndent()
@@ -330,3 +330,6 @@ augroup END
 
 " abbreviate for Python pdb
 abb pdb; import pdb; pdb.set_trace()
+
+
+
