@@ -286,13 +286,15 @@ function! ToggleIndent()
     endif
 endf
 
-au FileType python call ToggleIndent()
+au FileType python,javascript call ToggleIndent()
 " Activate auto filetype detection
 set pastetoggle=<F6>    " F6 toggles paste mode
 
 
 au BufNewFile,BufRead *.txt setf text
 au FileType text set wrap 
+
+map <LocalLeader>cs :%s/\s\+$//e<CR>
 
 " plugin settings
 
