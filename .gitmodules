@@ -61,3 +61,9 @@
 [submodule "bundle/delimitMate"]
 	path = bundle/delimitMate
 	url = https://github.com/Raimondi/delimitMate.git
+[submodule "bundle/MatchTagAlways"]
+	path = bundle/MatchTagAlways
+	url = https://github.com/Valloric/MatchTagAlways.git
+[submodule "bundle/vim-markdown"]
+	path = bundle/vim-markdown
+	url = https://github.com/plasticboy/vim-markdown.git
