@@ -333,5 +333,7 @@ augroup END
 " abbreviate for Python pdb
 abb pdb; import pdb; pdb.set_trace()
 
+let g:virtualenv_auto_activate=1
+let g:flake8_cmd="flake8-python2"
 
 
