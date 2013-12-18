@@ -337,3 +337,8 @@ let g:virtualenv_auto_activate=1
 let g:flake8_cmd="flake8-python2"
 
 
+" Start interactive EasyAlign in visual mode
+vmap <Enter> <Plug>(EasyAlign)
+
+" " Start interactive EasyAlign with a Vim movement
+nmap <Leader>a <Plug>(EasyAlign)
