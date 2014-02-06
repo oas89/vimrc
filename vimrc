@@ -286,7 +286,7 @@ function! ToggleIndent()
     endif
 endf
 
-au FileType python,javascript call ToggleIndent()
+au FileType python call ToggleIndent()
 " Activate auto filetype detection
 set pastetoggle=<F6>    " F6 toggles paste mode
 
