@@ -155,6 +155,13 @@ menu Encoding.KOI8-U   :e ++enc=koi8-u<CR>
 menu Encoding.UTF-8    :e ++enc=utf-8<CR>
 map <F8> :emenu Encoding.<TAB>
 
+set wildmenu
+set wcm=<Tab>
+menu filefmt.unix   :setlocal fileformat=unix<CR>
+menu filefmt.dos    :setlocal fileformat=dos<CR>
+menu filefmt.mac    :setlocal fileformat=mac<CR>
+map <F9> :emenu filefmt.<TAB>
+
 set lazyredraw
 
 "set encoding=cp1251
@@ -286,7 +293,7 @@ function! ToggleIndent()
     endif
 endf
 
-au FileType python call ToggleIndent()
+"au FileType python call ToggleIndent()
 " Activate auto filetype detection
 set pastetoggle=<F6>    " F6 toggles paste mode
 
