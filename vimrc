@@ -324,7 +324,7 @@ call pathogen#infect()
 call pathogen#helptags()
 
 " NERDTree
-
+map <C-n> :NERDTreeToggle<CR>
 " ignore in NERDTree files that end with pyc and ~
 let NERDTreeIgnore=['\.pyc$', '\~$']
 
