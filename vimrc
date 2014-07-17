@@ -80,7 +80,7 @@ set backspace=indent,eol,start
 set wrapmargin=5
 " подсветим 85ю колонку
 if version >= 703
-    set colorcolumn=85
+    set colorcolumn=80
 endif
 " автоматический перенос после 128 колонки
 set textwidth=128
