@@ -57,11 +57,11 @@ nmap <Right> >>
 vmap <Left> <gv
 vmap <Right> >gv
 
-nmap <Up> <Nop>
-nmap <Down> <Nop>
-vmap <Up> <Nop>
-vmap <Down> <Nop>
-
+let g:move_map_keys=0
+vmap <DOWN> <Plug>MoveBlockDown
+vmap <UP> <Plug>MoveBlockUp
+nmap <DOWN> <Plug>MoveLineDown
+nmap <UP> <Plug>MoveLineUp
 
 set listchars=tab:»\ ,trail:·,eol:¶
 set list
