@@ -58,6 +58,7 @@ vmap <Left> <gv
 vmap <Right> >gv
 
 let g:move_map_keys=0
+let g:move_auto_indent=0
 vmap <DOWN> <Plug>MoveBlockDown
 vmap <UP> <Plug>MoveBlockUp
 nmap <DOWN> <Plug>MoveLineDown
@@ -250,12 +251,6 @@ endf
 nmap <C-x>G :call GitGrepWord()<CR>
 "let g:khuno_ignore="W191,E501,E303,E123,E241,E121,E122,E221,E242,E128,E225"
 
-
-
-
-
-
-
 " Return indent (all whitespace at start of a line), converted from
 " tabs to spaces if what = 1, or from spaces to tabs otherwise.
 " When converting to tabs, result has no redundant spaces.
@@ -343,4 +338,5 @@ abb pdb; import pdb; pdb.set_trace()
 let g:virtualenv_auto_activate=1
 let g:flake8_cmd="flake8-python2"
 
+highlight SignColumn ctermbg=black
 
