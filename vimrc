@@ -309,7 +309,7 @@ let g:pyflakes_use_quickfix = 0
 
 " ignore white space of empty line warning for flake8
 let g:flake8_ignore="W293"
-let g:flake8_max_line_length=99
+let g:flake8_max_line_length=80
 " autorun flake8 on save
 autocmd BufWritePost *.py call Flake8()
 
