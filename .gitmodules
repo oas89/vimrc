@@ -82,3 +82,6 @@
 [submodule "bundle/plantuml"]
 	path = bundle/plantuml
 	url = https://github.com/aklt/plantuml-syntax.git
+[submodule "bundle/orgmode"]
+	path = bundle/orgmode
+	url = https://github.com/jceb/vim-orgmode.git

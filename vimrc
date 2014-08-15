@@ -145,7 +145,7 @@ filetype on
 filetype plugin on
 filetype indent on
 " Если сохраняемый файл является файлом скрипта - сделать его исполняемым
-au BufWritePost * if getline(1) =~ "^#!.*/bin/.*sh"|silent !chmod a+x %|endif
+au BufWritePost * if getline(1) =~ "^#!.*/bin/.*sh" | silent execute "!chmod a+x %" | endif
 
 "" Переключение кодировок файла
 set wildmenu
