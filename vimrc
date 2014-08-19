@@ -249,7 +249,6 @@ func! GitGrepWord()
     call GitGrep('-w -e ', getreg('z'))
 endf
 nmap <C-x>G :call GitGrepWord()<CR>
-"let g:khuno_ignore="W191,E501,E303,E123,E241,E121,E122,E221,E242,E128,E225"
 
 " Return indent (all whitespace at start of a line), converted from
 " tabs to spaces if what = 1, or from spaces to tabs otherwise.
@@ -308,8 +307,9 @@ let g:pyflakes_use_quickfix = 0
 " flake8
 
 " ignore white space of empty line warning for flake8
-let g:flake8_ignore="W293"
+let g:flake8_ignore="E128"
 let g:flake8_max_line_length=80
+let g:flake8_cmd="flake8-python2"
 " autorun flake8 on save
 autocmd BufWritePost *.py call Flake8()
 
@@ -336,7 +336,6 @@ augroup END
 abb pdb; import pdb; pdb.set_trace()
 
 let g:virtualenv_auto_activate=1
-let g:flake8_cmd="flake8-python2"
 
 highlight SignColumn ctermbg=black
 
