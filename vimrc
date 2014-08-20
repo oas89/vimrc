@@ -207,6 +207,8 @@ nmap <F10> <ESC>:w !sudo tee %<CR>
 
 " ?
 "inoremap <silent> <C-u> <ESC>u:set paste<CR>.:set nopaste<CR>gi
+inoremap jk <esc>
+inoremap <esc> <nop>
 
 set statusline=%f\ %L%y%r\ [%{&ff}][%{&fenc}]\ %=%m\ %-15(0x%02B\ (%b)%)%-15(%l,%c%V%)%P
 " %{GitBranch()}\ 
