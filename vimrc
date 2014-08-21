@@ -38,7 +38,7 @@ set history=250     " keep 250 lines of command line history
 set ruler           " show the cursor position all the time
 
 " Don't use Ex mode, use Q for formatting
-map Q gq
+"map Q gq
 
 set number
 "set relativenumber
@@ -52,17 +52,17 @@ set background=dark
 colorscheme solarized
 
 
-nmap <Left> <<
-nmap <Right> >>
-vmap <Left> <gv
-vmap <Right> >gv
+nnoremap <Left> <<
+nnoremap <Right> >>
+vnoremap <Left> <gv
+vnoremap <Right> >gv
 
 let g:move_map_keys=0
 let g:move_auto_indent=0
-vmap <DOWN> <Plug>MoveBlockDown
-vmap <UP> <Plug>MoveBlockUp
-nmap <DOWN> <Plug>MoveLineDown
-nmap <UP> <Plug>MoveLineUp
+vnoremap <DOWN> <Plug>MoveBlockDown
+vnoremap <UP> <Plug>MoveBlockUp
+nnoremap <DOWN> <Plug>MoveLineDown
+nnoremap <UP> <Plug>MoveLineUp
 
 set listchars=tab:»\ ,trail:·,eol:¶
 set list
@@ -154,14 +154,14 @@ menu Encoding.CP1251   :e ++enc=cp1251<CR>
 menu Encoding.CP866    :e ++enc=cp866<CR>
 menu Encoding.KOI8-U   :e ++enc=koi8-u<CR>
 menu Encoding.UTF-8    :e ++enc=utf-8<CR>
-map <F8> :emenu Encoding.<TAB>
+noremap <F8> :emenu Encoding.<TAB>
 
 set wildmenu
 set wcm=<Tab>
 menu filefmt.unix   :setlocal fileformat=unix<CR>
 menu filefmt.dos    :setlocal fileformat=dos<CR>
 menu filefmt.mac    :setlocal fileformat=mac<CR>
-map <F9> :emenu filefmt.<TAB>
+noremap <F9> :emenu filefmt.<TAB>
 
 set lazyredraw
 
@@ -193,17 +193,17 @@ function! NextTabOpened()
 endfunction
 
 " сохраняемся по F2
-nmap <F2> <ESC>:w<CR>
-imap <F2> <ESC>:w<CR>i<Right>
-nmap <F3> <ESC>:nohlsearch<CR>
-imap <F3> <ESC>:nohlsearch<CR>
+nnoremap <F2> <ESC>:w<CR>
+inoremap <F2> <ESC>:w<CR>i<Right>
+nnoremap <F3> <ESC>:nohlsearch<CR>
+inoremap <F3> <ESC>:nohlsearch<CR>
 " F6/F7 - предыдущая/следующая ошибка
-nmap <F6> <ESC>:cp<CR>
-imap <F6> <ESC>:cp<CR>
-nmap <F7> <ESC>:cn<CR>
-imap <F7> <ESC>:cn<CR>
+nnoremap <F6> <ESC>:cp<CR>
+inoremap <F6> <ESC>:cp<CR>
+nnoremap <F7> <ESC>:cn<CR>
+inoremap <F7> <ESC>:cn<CR>
 
-nmap <F10> <ESC>:w !sudo tee %<CR>
+nnoremap <F10> <ESC>:w !sudo tee %<CR>
 
 " ?
 "inoremap <silent> <C-u> <ESC>u:set paste<CR>.:set nopaste<CR>gi
@@ -216,8 +216,8 @@ set laststatus=2
 
 " tab navigation like firefox
 if version >= 700
-    nmap Z :tabprev<cr>
-    nmap X :tabnext<cr>
+    nnoremap Z :tabprev<cr>
+    nnoremap X :tabnext<cr>
 endif
 
 " хранить swap-файлы будем в одном месте, чтобы не мешались
@@ -250,7 +250,7 @@ func! GitGrepWord()
     normal! "zyiw
     call GitGrep('-w -e ', getreg('z'))
 endf
-nmap <C-x>G :call GitGrepWord()<CR>
+nnoremap <C-x>G :call GitGrepWord()<CR>
 
 " Return indent (all whitespace at start of a line), converted from
 " tabs to spaces if what = 1, or from spaces to tabs otherwise.
@@ -295,9 +295,9 @@ set pastetoggle=<F6>    " F6 toggles paste mode
 
 
 au BufNewFile,BufRead *.txt setf text
-au FileType text set wrap 
+au FileType text set wrap
 
-map <LocalLeader>cs :%s/\s\+$//e<CR>
+noremap <LocalLeader>cs :%s/\s\+$//e<CR>
 
 " plugin settings
 
@@ -321,7 +321,7 @@ call pathogen#infect()
 call pathogen#helptags()
 
 " NERDTree
-map <C-n> :NERDTreeToggle<CR>
+noremap <C-n> :NERDTreeToggle<CR>
 " ignore in NERDTree files that end with pyc and ~
 let NERDTreeIgnore=['\.pyc$', '\~$']
 
