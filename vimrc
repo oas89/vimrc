@@ -250,7 +250,7 @@ func! GitGrepWord()
     normal! "zyiw
     call GitGrep('-w -e ', getreg('z'))
 endf
-nnoremap <C-x>G :call GitGrepWord()<CR>
+nnoremap <LocalLeader>G :call GitGrepWord()<CR>
 
 " Return indent (all whitespace at start of a line), converted from
 " tabs to spaces if what = 1, or from spaces to tabs otherwise.
@@ -340,4 +340,5 @@ abb pdb; import pdb; pdb.set_trace()
 let g:virtualenv_auto_activate=1
 
 highlight SignColumn ctermbg=black
+
 
