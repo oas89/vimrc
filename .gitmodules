@@ -45,7 +45,7 @@
 	url = git://github.com/davidhalter/jedi-vim.git
 [submodule "bundle/sort-python-imports"]
 	path = bundle/sort-python-imports
-	url = git@home.nekolyanich.com:sort-python-imports
+	url = git@nekolyanich.com:sort-python-imports
 [submodule "bundle/vim-protobuf"]
 	path = bundle/vim-protobuf
 	url = git://github.com/uarun/vim-protobuf.git
