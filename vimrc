@@ -341,4 +341,8 @@ let g:virtualenv_auto_activate=1
 
 highlight SignColumn ctermbg=black
 
+:command WQ wq
+:command Wq wq
+:command W w
+:command Q q
 
