@@ -309,7 +309,7 @@ let g:pyflakes_use_quickfix = 0
 " flake8
 
 " ignore white space of empty line warning for flake8
-let g:flake8_ignore="E128, E226"
+let g:flake8_ignore="E128"
 let g:flake8_max_line_length=80
 let g:flake8_cmd="flake8-python2"
 " autorun flake8 on save
