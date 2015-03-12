@@ -97,3 +97,9 @@
 [submodule "bundle/isort"]
 	path = bundle/isort
 	url = https://github.com/fisadev/vim-isort.git
+[submodule "bundle/riv"]
+	path = bundle/riv
+	url = git@github.com:Rykka/riv.vim.git
+[submodule "bundle/InstantRst"]
+	path = bundle/InstantRst
+	url = git@github.com:Rykka/InstantRst.git
