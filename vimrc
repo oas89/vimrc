@@ -79,7 +79,30 @@ set autoindent smartindent
 "set expandtab
 
 
+if has("mouse")
+    set mouse=         " выключает поддержку мыши при работе в терминале (без GUI)
+    set mousehide       " скрывать мышь в режиме ввода текста
+endif
+
+if version >= 700
+    set sessionoptions=curdir,buffers,help,options,resize,slash,tabpages,winpos,winsize 
+else
+    set sessionoptions=curdir,buffers,help,options,resize,slash,winpos,winsize
+endif
+
+set formatoptions=croql
+set cinoptions=l1,g0,p0,t0,c0,(s,U1,m1
+
+
+" Enable filetype detection and hooks
+filetype on
+filetype plugin on
+filetype indent on
+
+
 " Keybindings
+let mapleader=","
+
 inoremap jk <Esc>
 
 nnoremap Z :bprev<cr>
@@ -107,43 +130,18 @@ menu LineEndings.mac  :setlocal fileformat=mac<CR>
 
 
 " Hooks for different filetypes
-au FileType crontab,fstab,make set noexpandtab tabstop=8 shiftwidth=8
+autocmd FileType crontab,fstab,make set noexpandtab tabstop=8 shiftwidth=8
+autocmd FocusLost * :wa
 
 
-
-
-"let vimfiles_dir=expand("$HOME/.vim/")
-"filetype on
-"if filereadable(vimfiles_dir."autoload/pathogen.vim")
-"    "call pathogen#helptags()
-"    call pathogen#runtime_append_all_bundles()
-"    call pathogen#infect()
-"endif
-"filetype plugin indent on
-"filetype plugin on
-
-set formatoptions=croql
-set cinoptions=l1,g0,p0,t0,c0,(s,U1,m1
-
-au FocusLost * :wa
-
-
-
-if has("mouse")
-    set mouse=         " выключает поддержку мыши при работе в терминале (без GUI)
-    set mousehide       " скрывать мышь в режиме ввода текста
+" Enable pathogen plugin manager if available
+let VIM_DIRECTORY=expand("$HOME/.vim/")
+if filereadable(VIM_DIRECTORY."autoload/pathogen.vim")
+    execute pathogen#helptags()
+    execute pathogen#runtime_append_all_bundles()
+    execute pathogen#infect()
 endif
 
-if version >= 700
-    set sessionoptions=curdir,buffers,help,options,resize,slash,tabpages,winpos,winsize 
-else
-    set sessionoptions=curdir,buffers,help,options,resize,slash,winpos,winsize
-endif
-
-
-filetype on
-filetype plugin on
-filetype indent on
 
 " Ловля имени редактируемого файла из vim'а. (^[ вводится как Ctrl+V Esc)
 set title
@@ -158,53 +156,9 @@ if &term == "screen" || &term == "xterm"
 endif
 
 
-" Return indent (all whitespace at start of a line), converted from
-" tabs to spaces if what = 1, or from spaces to tabs otherwise.
-" When converting to tabs, result has no redundant spaces.
-function! Indenting(indent, what, cols)
-  let spccol = repeat(' ', a:cols)
-  let result = substitute(a:indent, spccol, '\t', 'g')
-  let result = substitute(result, ' \+\ze\t', '', 'g')
-  if a:what == 1
-    let result = substitute(result, '\t', spccol, 'g')
-  endif
-  return result
-endfunction
-
-" Convert whitespace used for indenting (before first non-whitespace).
-" what = 0 (convert spaces to tabs), or 1 (convert tabs to spaces).
-" cols = string with number of columns per tab, or empty to use 'tabstop'.
-" The cursor position is restored, but the cursor will be in a different
-" column when the number of characters in the indent of the line is changed.
-function! IndentConvert(line1, line2, what, cols)
-  let savepos = getpos('.')
-  let cols = empty(a:cols) ? &tabstop : a:cols
-  execute a:line1 . ',' . a:line2 . 's/^\s\+/\=Indenting(submatch(0), a:what, cols)/e'
-  call histdel('search', -1)
-  call setpos('.', savepos)
-endfunction
-
-command! -nargs=? -range=% Space2Tab call IndentConvert(<line1>,<line2>,0,4)
-command! -nargs=? -range=% Tab2Space call IndentConvert(<line1>,<line2>,1,4)
-command! -nargs=? -range=% RetabIndent call IndentConvert(<line1>,<line2>,&et,<q-args>)
-
-function! ToggleIndent()
-    if !search('^\t', 'nw')
-        Space2Tab
-        au BufWritePre,FileWritePre,FileAppendPre,FilterWritePre  * :Tab2Space
-        au BufWritePost,FileWritePost,FileAppendPost,FilterWritePost * :Space2Tab
-    endif
-endf
-
-
 let g:pyflakes_use_quickfix = 0
 let g:flake8_cmd="flake8-python2"
 autocmd BufWritePost *.py call Flake8()
-
-" pathogen
-
-call pathogen#infect()
-call pathogen#helptags()
 
 " NERDTree
 noremap <C-n> :NERDTreeToggle<CR>
