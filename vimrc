@@ -29,7 +29,9 @@ set showmatch
 set matchpairs+=<:>
 
 " Show 80th column
-set colorcolumn=80
+if version > 730
+  set colorcolumn=80
+endif
 
 " Automatically reread externally edited files
 set autoread
