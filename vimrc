@@ -1,6 +1,8 @@
 set nocompatible " Incompatable mode
-set ttyfast " Smooth scrolling
-set number " Show line numbers
+set ttyfast      " Smooth scrolling
+set number       " Show line numbers
+set visualbell   " Disable annoying beeps
+set showcmd      " Show incomplete commands in normal mode
 
 " Search tunning
 set hlsearch
@@ -20,9 +22,6 @@ set listchars=tab:→\ ,trail:·
 
 " Backspace over everything in insert mode
 set backspace=indent,eol,start
-
-" Show incomplete commands in normal mode
-set showcmd
 
 " Braces highlight tunning 
 set showmatch
@@ -171,3 +170,4 @@ let NERDTreeIgnore=['\.pyc$', '\~$']
 :command Wq wq
 :command W w
 :command Q q
+
