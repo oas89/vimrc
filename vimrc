@@ -1,3 +1,4 @@
+scriptencoding utf-8 " Always read config as utf-8
 set nocompatible " Incompatable mode
 set ttyfast      " Smooth scrolling
 set number       " Show line numbers
@@ -12,9 +13,6 @@ set smartcase
 
 " Enable syntax highlight
 syntax enable
-
-" Colors tunning
-colorscheme desert
 
 " Show invisible symbols
 set list
@@ -171,3 +169,7 @@ let NERDTreeIgnore=['\.pyc$', '\~$']
 :command W w
 :command Q q
 
+" Colors
+set t_Co=16
+set background=dark
+colorscheme solarized
