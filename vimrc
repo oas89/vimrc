@@ -71,11 +71,11 @@ set wildmenu
 set wcm=<Tab>
 
 " Spaces and tabs behaviour
-set tabstop=3
-set shiftwidth=3
-set autoindent smartindent
 "set smarttab
-"set expandtab
+set tabstop=4
+set shiftwidth=4
+set autoindent smartindent
+set expandtab
 
 
 if has("mouse")
@@ -91,7 +91,6 @@ endif
 
 set formatoptions=croql
 set cinoptions=l1,g0,p0,t0,c0,(s,U1,m1
-
 
 " Enable filetype detection and hooks
 filetype on
@@ -172,4 +171,4 @@ let NERDTreeIgnore=['\.pyc$', '\~$']
 " Colors
 set t_Co=16
 set background=dark
-colorscheme solarized
+colorscheme desert
