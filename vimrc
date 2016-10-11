@@ -16,7 +16,7 @@ syntax enable
 
 " Show invisible symbols
 set list
-set listchars=tab:→\ ,trail:·
+set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
 
 " Backspace over everything in insert mode
 set backspace=indent,eol,start
@@ -141,34 +141,16 @@ if filereadable(VIM_DIRECTORY."autoload/pathogen.vim")
 endif
 
 
-" Ловля имени редактируемого файла из vim'а. (^[ вводится как Ctrl+V Esc)
-set title
-let &titlestring = "vim (" . expand("%:t") . ")"
-if &term == "screen"
-    set t_ts=k
-    set t_fs=\
-endif
-
-if &term == "screen" || &term == "xterm"
-    set title
-endif
-
-
-let g:pyflakes_use_quickfix = 0
-let g:flake8_cmd="flake8-python2"
-autocmd BufWritePost *.py call Flake8()
+"let g:pyflakes_use_quickfix = 0
+"let g:flake8_cmd="flake8-python2"
+"autocmd BufWritePost *.py call Flake8()
 
 " NERDTree
 noremap <C-n> :NERDTreeToggle<CR>
 let NERDTreeIgnore=['\.pyc$', '\~$']
 
-
-:command WQ wq
-:command Wq wq
-:command W w
-:command Q q
-
 " Colors
 set t_Co=16
 set background=dark
 colorscheme desert
+

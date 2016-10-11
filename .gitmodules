@@ -13,3 +13,6 @@
 [submodule "bundle/verilog"]
 	path = bundle/verilog
 	url = https://github.com/vhda/verilog_systemverilog.vim.git
+[submodule "bundle/vim-commentary"]
+	path = bundle/vim-commentary
+	url = https://github.com/tpope/vim-commentary.git
